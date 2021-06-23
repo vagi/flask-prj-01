@@ -30,10 +30,7 @@ def get_operation():
 @app.route('/encrypt/out', methods=('GET', 'POST'))
 def transform():
     if request.method == 'GET':
-        return '<form method="POST"> ' \
-               '<input name="text"> ' \
-               '<input type="submit"> ' \
-               '</form>'
+        return render_template('form.html',)
     else:
         text = request.form["text"]
         print(text)
