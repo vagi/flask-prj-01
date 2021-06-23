@@ -16,6 +16,15 @@ def get_operation():
     return f'Operation: {string}'
 
 
+@app.route('/encrypt/out', methods=('GET', 'POST'))
+def transform():
+    if request.method == 'GET':
+        return '<form method="POST"> <input name="text"> <input type="submit"> </form>'
+    else:
+        text = request.form["text"]
+        print(text)
+        return f'Your text: {text}'
+
 
 
 # Inserting condition in case this file was used as not main application,
