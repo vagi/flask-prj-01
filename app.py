@@ -39,8 +39,9 @@ def encryption():
     if request.method == 'GET':
         return render_template('form.html',)
     else:
-        text = request.form["text"]
-        token = f.encrypt(b'text')
+        user_input = request.form["text"]
+        text_to_bytes = user_input.encode('utf-8')
+        token = f.encrypt(text_to_bytes)
         #return f'Encrypted result: {token}'
         return f"<i>Encrypted result:</i> <h3>{token}</h3>"
 
@@ -50,8 +51,9 @@ def decryption():
     if request.method == 'GET':
         return render_template('form.html',)
     else:
-        token_: bytes = b'request.form["text"]'
-        output = f.decrypt(token_)
+        token_ = request.form["text"]
+        token_to_bytes = token_.encode('utf-8')
+        output = f.decrypt(token_to_bytes)
         #return f'Encrypted result: {output}'
         return f'<i>Decrypted result:</i> <h3>{output.decode()}</h3>'
 
