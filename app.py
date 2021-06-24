@@ -5,34 +5,13 @@ from cryptography.fernet import Fernet
 # Initialize Flask object
 app = Flask(__name__)
 
-# Initialize Fernet object for encryption/decryption
+# Initialize Fernet object for encryption/decryption operations
 key = Fernet.generate_key()
 f = Fernet(key)
 
 
-# Build tracking of page the user chosen and show a content of the page
-#@app.route('/')
-#@app.route('/index')
-#def get_index():
-#    params ={
-#        'operation_1': 'encryption',
-#        'operation_2': 'decryption',
-#    }
-#    return render_template(
-#        'index.html',
-#        **params)
-
-# First method using args in url
-#@app.route('/encrypt')
-#def get_operation():
-#    string = request.args.get(
-#        'string', "You didn't enter your operation"
-#    )
-#    token = f.encrypt(b"string")
-#    return f'Encrypted result: {token}'
-
-
-# Second method using the Form
+# A decorator used to tell the application which URLs is
+# associated with the following function
 @app.route('/', methods=('GET', 'POST'))
 @app.route('/index', methods=('GET', 'POST'))
 @app.route('/encrypt', methods=('GET', 'POST'))
@@ -40,22 +19,29 @@ def encryption():
     if request.method == 'GET':
         return render_template('index.html',)
     else:
-        user_input = request.form["text"]
+        # Getting input of text into the form
+        user_input = request.form.get('text', 'Input your text')
+        print("text:", user_input)
+        # Converting the text into bytes type
         text_to_bytes = user_input.encode('utf-8')
+        # Encrypting the text
         token = f.encrypt(text_to_bytes)
         return f"<i>Encrypted result:</i> <h3>{token}</h3>"
 
-
+# A decorator used to tell the application which URL is
+# associated with the following function
 @app.route('/decrypt', methods=('GET', 'POST'))
 def decryption():
     if request.method == 'GET':
         return render_template('index.html',)
     else:
-        token_ = request.form["text"]
+        # Getting input of token into the form
+        token_ = request.form['text']
+        # Converting the string into bytes type
         token_to_bytes = token_.encode('utf-8')
+        # Decrypting the token into text
         output = f.decrypt(token_to_bytes)
         return f'<i>Decrypted result:</i> <h3>{output.decode()}</h3>'
-
 
 
 # Inserting condition in case this file is used as a module (imported by another file)
