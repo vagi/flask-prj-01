@@ -11,17 +11,16 @@ f = Fernet(key)
 
 
 # Build tracking of page the user chosen and show a content of the page
-@app.route('/')
-@app.route('/index')
-def get_index():
-    params ={
-        'operation_1': 'encryption',
-        'operation_2': 'decryption',
-    }
-    return render_template(
-        'index.html',
-        **params
-    )
+#@app.route('/')
+#@app.route('/index')
+#def get_index():
+#    params ={
+#        'operation_1': 'encryption',
+#        'operation_2': 'decryption',
+#    }
+#    return render_template(
+#        'index.html',
+#        **params)
 
 # First method using args in url
 #@app.route('/encrypt')
@@ -34,27 +33,27 @@ def get_index():
 
 
 # Second method using the Form
+@app.route('/', methods=('GET', 'POST'))
+@app.route('/index', methods=('GET', 'POST'))
 @app.route('/encrypt', methods=('GET', 'POST'))
 def encryption():
     if request.method == 'GET':
-        return render_template('form.html',)
+        return render_template('index.html',)
     else:
         user_input = request.form["text"]
         text_to_bytes = user_input.encode('utf-8')
         token = f.encrypt(text_to_bytes)
-        #return f'Encrypted result: {token}'
         return f"<i>Encrypted result:</i> <h3>{token}</h3>"
 
 
 @app.route('/decrypt', methods=('GET', 'POST'))
 def decryption():
     if request.method == 'GET':
-        return render_template('form.html',)
+        return render_template('index.html',)
     else:
         token_ = request.form["text"]
         token_to_bytes = token_.encode('utf-8')
         output = f.decrypt(token_to_bytes)
-        #return f'Encrypted result: {output}'
         return f'<i>Decrypted result:</i> <h3>{output.decode()}</h3>'
 
 
