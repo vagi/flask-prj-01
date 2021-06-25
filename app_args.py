@@ -16,7 +16,7 @@ def get_text():
     Get parameter string (str) from URL query string and
     pass it to Fernet encryption method.
     Returns:
-        HTML page to be loaded and token (bytes string)
+        HTML page to be loaded and token (bytes str)
     """
 
     # Getting input of text in URL's query string
@@ -42,7 +42,8 @@ def get_token():
     Get parameter string (str) from URL query string and
     pass it to Fernet decryption method.
     Returns:
-        HTML page to be loaded and encrypted text (str)
+        HTML page to be loaded and decrypted token in form of
+        plain text (str)
     """
 
     # Getting input of token in URL's query string

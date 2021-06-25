@@ -27,16 +27,19 @@ def encryption():
     if request.method == 'GET':
         return render_template('index.html',)
     else:
-        # Getting input of text in the form
+        # Getting input of text in the <form>
         user_input = request.form['text']
+
         # Checking whether user's input is empty
         if user_input == '':
             return "<i>Empty string entered!</i>"
         else:
             # Converting the text into bytes type
             text_to_bytes = user_input.encode('utf-8')
+
             # Encrypting the text
             token = f.encrypt(text_to_bytes)
+
             # Removing prefix "b" with single quotes
             token_ = token.decode()
             return f"<i>Encrypted result:</i><h3>{token_}</h3>"
@@ -57,13 +60,14 @@ def decryption():
     if request.method == 'GET':
         return render_template('index.html',)
     else:
-        # Getting input of token into the form
+        # Getting input of token into the <form>
         token_ = request.form['text']
         if token_ == '':
             return "<i>Empty string entered!</i>"
         else:
             # Converting the string into bytes type
             token_to_bytes = token_.encode('utf-8')
+
             # Decrypting the token into text
             output = f.decrypt(token_to_bytes)
             return f'<i>Decrypted result:</i> <h3>{output.decode()}</h3>'
