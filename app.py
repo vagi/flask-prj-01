@@ -16,11 +16,20 @@ f = Fernet(key)
 @app.route('/index', methods=('GET', 'POST'))
 @app.route('/encrypt', methods=('GET', 'POST'))
 def encryption():
+    """
+    In case of GET request load index.html with form.
+    Once a POST request sent, get string (str) from
+    form  and pass it to Fernet encryption method.
+    Returns:
+        HTML page to be loaded and encrypted text in form of
+        Fernet token (bytes str)
+    """
     if request.method == 'GET':
         return render_template('index.html',)
     else:
-        # Getting input of text into the form
+        # Getting input of text in the form
         user_input = request.form['text']
+        # Checking whether user's input is empty
         if user_input == '':
             return "<i>Empty string entered!</i>"
         else:
@@ -28,13 +37,23 @@ def encryption():
             text_to_bytes = user_input.encode('utf-8')
             # Encrypting the text
             token = f.encrypt(text_to_bytes)
-            return f"<i>Encrypted result:</i><h3>{token}</h3>"
+            # Removing prefix "b" with single quotes
+            token_ = token.decode()
+            return f"<i>Encrypted result:</i><h3>{token_}</h3>"
 
 
 # A decorator used to tell the application which URL is
 # associated with the following function
 @app.route('/decrypt', methods=('GET', 'POST'))
 def decryption():
+    """
+    In case of GET request load index.html with form.
+    Once a POST request sent, get string (str) from
+    form and pass it to Fernet decryption method.
+    Returns:
+        HTML page to be loaded and decrypted token in form of
+        plain text (str)
+    """
     if request.method == 'GET':
         return render_template('index.html',)
     else:
