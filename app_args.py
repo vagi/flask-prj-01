@@ -1,4 +1,3 @@
-# Import required libraries
 from flask import Flask, render_template, request
 from cryptography.fernet import Fernet
 
@@ -13,10 +12,18 @@ f = Fernet(key)
 # associated with the following function
 @app.route('/encrypt')
 def get_text():
+    """
+    Get parameter string (str) from URL query string and
+    pass it to Fernet encryption method.
+    Returns:
+        HTML page to be loaded and token (bytes string)
+    """
+
     # Getting input of text in URL's query string
+    # Once empty input sent the default "Hello World!" is used
     string = request.args.get(
         'string',
-        "You didn't enter your text",
+        "Hello World!",
     )
     # Converting the text into bytes type
     text_to_bytes = string.encode('utf-8')
@@ -31,6 +38,13 @@ def get_text():
 # associated with the following function
 @app.route('/decrypt')
 def get_token():
+    """
+    Get parameter string (str) from URL query string and
+    pass it to Fernet decryption method.
+    Returns:
+        HTML page to be loaded and encrypted text (str)
+    """
+
     # Getting input of token in URL's query string
     token = request.args.get(
         'string',
