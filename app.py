@@ -31,7 +31,7 @@ def encryption():
         user_input = request.form['text']
 
         # Checking whether user's input is empty
-        if user_input == '':
+        if not user_input:
             return "<i>Empty string entered!</i>"
         else:
             # Converting the text into bytes type
@@ -62,7 +62,7 @@ def decryption():
     else:
         # Getting input of token into the <form>
         token_ = request.form['text']
-        if token_ == '':
+        if not token_:
             return "<i>Empty string entered!</i>"
         else:
             # Converting the string into bytes type
