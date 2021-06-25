@@ -8,6 +8,13 @@ app = Flask(__name__)
 key = Fernet.generate_key()
 f = Fernet(key)
 
+# A decorator used to tell the application that root page
+# to be loaded
+@app.route('/')
+def get_main():
+    return render_template('index_args.html')
+
+
 # A decorator used to tell the application which URLs is
 # associated with the following function
 @app.route('/encrypt')
